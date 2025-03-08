@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "fakestore-edc2003"
+  },
+  "targets": {
+    "fakestore-will2003": {
+      "hosting": {
+        "site": "fakestore-edc2003"  
+      }
+    }
+  }
+}
