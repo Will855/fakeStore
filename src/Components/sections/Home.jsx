@@ -1,10 +1,11 @@
 import React from "react";
-import Allproducts from "../engine/Products";
+
+import HomePage from "../engine/productsss";
 
 const Home = () => {
-    return(
-        <>  
-            <Allproducts/>
+    return (
+        <>
+            <HomePage />
         </>
     );
 }

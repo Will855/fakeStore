@@ -1,10 +1,10 @@
-import CategoriesPage from "../engine/categories";
-
+import React from "react";
+import CategoriesPage from '../engine/Products'
 const Categories = () => {
 
     return (
         <>
-            <CategoriesPage/> 
+            <CategoriesPage />
         </>
     );
 };

@@ -19,7 +19,7 @@ const App = () => {
     <Provider store={store}>
     <Router>
       <Navbar />
-      <br/><br/><br/>
+      <br/><br/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/categories" element={<Categories/>} />
