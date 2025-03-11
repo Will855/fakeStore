@@ -221,7 +221,7 @@ const HomePage = () => {
             </div>
         );
     }
-s
+
 
 // Validación de propiedades
 HomePage.propTypes = {
