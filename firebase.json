@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "fakestore-will2003",
+    "site": "fakestore-edf2003",
     "public": "dist",
     "ignore": [
       "firebase.json",

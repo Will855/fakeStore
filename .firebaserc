@@ -1,11 +1,11 @@
 {
   "projects": {
-    "default": "fakestore-edc2003"
+    "default": "fakestore-edf2003"
   },
   "targets": {
     "fakestore-will2003": {
       "hosting": {
-        "site": "fakestore-edc2003"  
+        "site": "fakestore-edf2003"  
       }
     }
   }
