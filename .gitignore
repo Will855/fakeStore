@@ -1,40 +1,32 @@
-/**
- * @fileoverview Configuración de archivos ignorados por Git
- */
+# dependencies
+/node_modules
+/.pnpm-store
 
-# Dependencias
-node_modules
-.pnp
-.pnp.js
+# Next.js build & cache
+/.next/
+/out/
 
-# Testing
-coverage
+# production
+/build
 
-# Producción
-dist
-build
-
-# Misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
+# debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# Editor
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# local env files
+.env*.local
+.env
 
-# Sistema
-Thumbs.db
+# vercel
+.vercel
+
+# agent tools & graphs
+.agents/
+graphify-out/
+*.md
+
+# OS generated files
+.DS_Store
+*.pem

@@ -1,10 +1,6 @@
-/**
- * @fileoverview Configuración de PostCSS para el proyecto
- */
-
-export default {
+module.exports = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
-}
+};

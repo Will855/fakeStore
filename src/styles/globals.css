@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-page: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-dark: #18181b;
+  --text-heading: #1e293b;
+  --text-body: #475569;
+  --accent-rose: #f43f5e;
+  --accent-rose-soft: #fff1f2;
+  --accent-rose-border: #fecdd3;
+}
+
+body {
+  color: var(--text-body);
+  background-color: var(--bg-page);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-serif-editorial {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Ocultar barra de scroll feas para contenedores horizontales */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Paneles & Tarjetas sobrias */
+.glass-panel {
+  background-color: #ffffff;
+  border: 1px solid #f3ecef;
+}
+
+.glass-card {
+  background-color: #ffffff;
+  border: 1px solid #f3ecef;
+  box-shadow: 0 4px 15px -3px rgba(244, 63, 94, 0.04);
+}
+
+.glass-card:hover {
+  background-color: #ffffff;
+  border-color: #fecdd3;
+  box-shadow: 0 10px 25px -4px rgba(244, 63, 94, 0.08);
+}
+
+/* Scrollbar global tenue */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #fecdd3;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f43f5e;
+}
