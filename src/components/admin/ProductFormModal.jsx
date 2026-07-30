@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Save, ChevronDown } from 'lucide-react';
+import { X, Save, ChevronDown, AlertCircle } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
+import { productSchema } from '@/lib/schemas';
 
 export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
   const { addProduct, updateProduct, categories } = useStore();
@@ -24,8 +25,11 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
     discountPercentage: 0,
   });
 
+  const [formErrors, setFormErrors] = useState({});
+
   useEffect(() => {
     const validDefaultCategory = categories && categories.length > 0 ? categories[0].id : 'vestidos';
+    setFormErrors({});
 
     if (productToEdit) {
       const categoryExists = categories.some(c => c.id === productToEdit.category);
@@ -68,15 +72,33 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.title || !formData.priceUSD) {
-      alert('Completa el título y precio.');
+    setFormErrors({});
+
+    const rawPayload = {
+      ...formData,
+      priceUSD: parseFloat(formData.priceUSD),
+      discountPercentage: parseInt(formData.discountPercentage, 10) || 0,
+    };
+
+    // Validar con esquema Zod
+    const validationResult = productSchema.safeParse(rawPayload);
+
+    if (!validationResult.success) {
+      const formattedErrors = {};
+      validationResult.error.issues.forEach(issue => {
+        if (issue.path[0]) {
+          formattedErrors[issue.path[0]] = issue.message;
+        }
+      });
+      setFormErrors(formattedErrors);
       return;
     }
 
-    const totalCalculatedStock = Object.values(formData.sizeStock || {}).reduce((a, b) => a + b, 0);
+    const validData = validationResult.data;
+    const totalCalculatedStock = Object.values(validData.sizeStock || {}).reduce((a, b) => a + b, 0);
 
     const payload = {
-      ...formData,
+      ...validData,
       stock: totalCalculatedStock,
     };
 
@@ -114,8 +136,16 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
                 required
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white focus:border-rose-400 focus:outline-none"
+                className={`w-full bg-zinc-950 border rounded-xl px-3.5 py-2.5 text-white focus:outline-none ${
+                  formErrors.title ? 'border-rose-500 bg-rose-950/20' : 'border-zinc-700 focus:border-rose-400'
+                }`}
               />
+              {formErrors.title && (
+                <p className="text-[11px] text-rose-400 font-semibold mt-1 flex items-center space-x-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{formErrors.title}</span>
+                </p>
+              )}
             </div>
 
             <div>
@@ -125,8 +155,16 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
                 required
                 value={formData.sku}
                 onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white focus:border-rose-400 focus:outline-none"
+                className={`w-full bg-zinc-950 border rounded-xl px-3.5 py-2.5 text-white focus:outline-none ${
+                  formErrors.sku ? 'border-rose-500 bg-rose-950/20' : 'border-zinc-700 focus:border-rose-400'
+                }`}
               />
+              {formErrors.sku && (
+                <p className="text-[11px] text-rose-400 font-semibold mt-1 flex items-center space-x-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{formErrors.sku}</span>
+                </p>
+              )}
             </div>
           </div>
 
@@ -161,8 +199,16 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
                 required
                 value={formData.priceUSD}
                 onChange={(e) => setFormData({ ...formData, priceUSD: e.target.value })}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white focus:border-rose-400 focus:outline-none"
+                className={`w-full bg-zinc-950 border rounded-xl px-3.5 py-2.5 text-white focus:outline-none ${
+                  formErrors.priceUSD ? 'border-rose-500 bg-rose-950/20' : 'border-zinc-700 focus:border-rose-400'
+                }`}
               />
+              {formErrors.priceUSD && (
+                <p className="text-[11px] text-rose-400 font-semibold mt-1 flex items-center space-x-1">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  <span>{formErrors.priceUSD}</span>
+                </p>
+              )}
             </div>
 
             <div>
@@ -206,13 +252,21 @@ export default function ProductFormModal({ isOpen, onClose, productToEdit }) {
           </div>
 
           <div>
-            <label className="block text-zinc-300 font-bold mb-1">URL de Foto de la Prenda</label>
+            <label className="block text-zinc-300 font-bold mb-1">URL de Foto de la Prenda *</label>
             <input
               type="text"
               value={formData.image}
               onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3.5 py-2.5 text-white focus:border-rose-400 focus:outline-none"
+              className={`w-full bg-zinc-950 border rounded-xl px-3.5 py-2.5 text-white focus:outline-none ${
+                formErrors.image ? 'border-rose-500 bg-rose-950/20' : 'border-zinc-700 focus:border-rose-400'
+              }`}
             />
+            {formErrors.image && (
+              <p className="text-[11px] text-rose-400 font-semibold mt-1 flex items-center space-x-1">
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>{formErrors.image}</span>
+              </p>
+            )}
           </div>
 
           {/* Opciones Especiales de Descuentos y Etiquetas */}
