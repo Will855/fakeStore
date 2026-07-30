@@ -1,32 +1,63 @@
-# dependencies
+# ========================================================
+# REGLAS DE SEGURIDAD STRICTAS DE GIT - FAKESTORE.VE
+# ========================================================
+
+# 1. BLOQUEO TOTAL DE ARCHIVOS DE ENTORNO Y SECRETOS (NUNCA SUBIR)
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.env.json
+
+# 2. CLAVES PRIVADAS, CERTIFICADOS Y CREDENCIALES
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+id_rsa*
+serviceAccountKey.json
+credentials.json
+secrets.json
+
+# 3. BASES DE DATOS LOCALES Y ARCHIVOS DE BACKUP
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.dump
+*.sql
+
+# 4. DEPENDENCIAS Y MÓDULOS DE PROYECTO
 /node_modules
 /.pnpm-store
+/vendor
 
-# Next.js build & cache
+# 5. COMPILACIÓN Y CACHÉ DE NEXT.JS
 /.next/
 /out/
-
-# production
 /build
+/dist
+/.vercel
 
-# debug logs
+# 6. REGISTROS Y LOGS DE DEPURACIÓN
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
-
-# agent tools & graphs
+# 7. HERRAMIENTAS DE AGENTE Y GRAFOS
 .agents/
 graphify-out/
 *.md
 
-# OS generated files
+# 8. ARCHIVOS GENERADOS POR EL SISTEMA OPERATIVO Y EDITOR
 .DS_Store
-*.pem
+Thumbs.db
+.vscode/
+.idea/
